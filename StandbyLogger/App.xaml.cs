@@ -22,7 +22,6 @@ namespace StandbyLogger
 
             container.RegisterType<MainWindow>();
             container.RegisterType<ViewModels.MainViewModel>();
-            container.RegisterType<ViewModels.HomeViewModel>();
             container.RegisterType<ViewModels.LogCreationViewModel>();
             container.RegisterType<ViewModels.SettingsViewModel>();
             container.RegisterType<ViewModels.ChartsViewModel>();

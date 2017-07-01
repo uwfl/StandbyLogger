@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace StandbyLogger.Models
 {
     public class Informer
     {
-        public string Nane { get; set; }
+        [XmlAttribute]
+        public string Name { get; set; }
+
+        public Informer()
+        { }
 
         public Informer(string name)
         {
-            Nane = name;
+            Name = name;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

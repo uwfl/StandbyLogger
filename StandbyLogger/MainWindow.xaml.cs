@@ -24,6 +24,8 @@ namespace StandbyLogger
         {
             InitializeComponent();
             VM = vm;
+
+            Title = "StandbyLogger";
         }
     }
 }

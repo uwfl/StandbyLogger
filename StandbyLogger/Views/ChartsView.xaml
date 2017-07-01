@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:StandbyLogger.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="HotPink">
-            
+    <Grid Background="White">
+        <TextBlock Text="Charts" />            
     </Grid>
 </UserControl>

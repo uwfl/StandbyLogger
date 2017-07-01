@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:StandbyLogger"
         xmlns:uc="clr-namespace:StandbyLogger.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900">
+        WindowStartupLocation="CenterScreen"
+        Title="{Binding Path=Title}" Height="600" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -27,8 +28,7 @@
                 <uc:Navigation />
             </Border>
 
-            <TextBlock Grid.Column="1" Text="{Binding Path=Title}" />
-            <ContentControl Grid.Column="1" Content="{Binding Path=CurrentView}" />
+            <ContentControl Grid.Column="1" Margin="10" Content="{Binding Path=CurrentView}" />
         </Grid>
     </Grid>
 </Window>

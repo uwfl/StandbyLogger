@@ -3,6 +3,8 @@
                     xmlns:local="clr-namespace:StandbyLogger.Styles"
                     xmlns:views="clr-namespace:StandbyLogger.Views"
                     xmlns:viewmodels="clr-namespace:StandbyLogger.ViewModels"
+                    xmlns:uc="clr-namespace:StandbyLogger.UserControls"
+                    xmlns:ext="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
                     xmlns:models="clr-namespace:StandbyLogger.Models">
     <!-- ViewModel Templates -->
     <DataTemplate DataType="{x:Type viewmodels:MainViewModel}">
@@ -10,25 +12,25 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:ChartsViewModel}">
         <views:ChartsView />
-    </DataTemplate>    
+    </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:LogCreationViewModel}">
         <views:LogCreationView />
-    </DataTemplate>    
+    </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
         <views:SettingsView />
-    </DataTemplate>    
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:ServiceLogViewModel}">
+        <views:ServiceLogView />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
         <views:HomeView />
     </DataTemplate>
     
     <!-- Custom DataTemplates -->
     <DataTemplate DataType="{x:Type models:LogEntryActor}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Grid Margin="0, 5">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -39,32 +41,53 @@
                 </Style>
             </Grid.Resources>
 
-            <Border Grid.Row="0" Grid.ColumnSpan="2">
-                <TextBlock DataContext="{Binding Actor}">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0}, {1}">
-                            <Binding Path="Lastname"/>
-                            <Binding Path="Firstname"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-            </Border>
+            <TextBlock Grid.Column="0" DataContext="{Binding Actor}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}, {1}">
+                        <Binding Path="Lastname"/>
+                        <Binding Path="Firstname"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
 
-            <Border Grid.Row="0" Grid.Column="0">
-                <TextBlock Text="{Binding From, StringFormat='HH:mm'}" />
-            </Border>
-
-            <Border Grid.Row="0" Grid.Column="1">
-                <TextBlock Text="{Binding To, StringFormat='HH:mm'}" />
-            </Border>
+            <TextBlock Grid.Column="1" Text="{Binding From, StringFormat='HH:mm'}" />
+            <TextBlock Grid.Column="2" Text="{Binding To, StringFormat='HH:mm'}" />
         </Grid>
     </DataTemplate>
-    
+
     <!-- Colors -->
     <SolidColorBrush x:Key="SCB_Reckeweg" Color="#E31E24" />
 
     <!-- Styles -->
     <Style TargetType="Image">
         <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+    </Style>
+
+    <Style x:Key="Style_Stackpanel_Menu" TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Style.Resources>
+            <Style TargetType="uc:MenuButton">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="BorderThickness" Value="1" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="Style_Border_Title" TargetType="Border">
+        <Setter Property="BorderThickness" Value="0, 0, 0, 2" />
+        <Setter Property="BorderBrush" Value="{StaticResource SCB_Reckeweg}" />
+        <Setter Property="Margin" Value="0, 0, 0, 5" />
+    </Style>
+
+    <Style x:Key="Style_TextBlock_Title" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <Style x:Key="Style_TextBlock_Subtitle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Bold" />
     </Style>
 </ResourceDictionary>

@@ -20,20 +20,15 @@ namespace StandbyLogger.UserControls
     /// </summary>
     public partial class MenuButton : Button
     {
-        public string Title
+        public ImageSource Icon
         {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        } 
-
-        public string Icon
-        {
-            get { return (string)GetValue(IconProperty); }
+            get { return (ImageSource)GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
-        
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(MenuButton), new PropertyMetadata(string.Empty));
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(MenuButton), new PropertyMetadata(string.Empty));
+
+        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IconProperty =
+            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(MenuButton), new UIPropertyMetadata(null));
 
         public MenuButton()
         {

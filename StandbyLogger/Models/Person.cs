@@ -1,19 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace StandbyLogger.Models
 {
     public class Person
     {
+        [XmlAttribute]
         public string Firstname { get; set; }
+        [XmlAttribute]
         public string Middlename { get; set; }
+        [XmlAttribute]
         public string Lastname { get; set; }
+        [XmlIgnore]
         public DateTime Birthdate { get; set; }
 
+        protected Person()
+        { }
+
+        public Person(string firstname, string middlename, string lastname)
+        {
+            Firstname = firstname;
+            Middlename = middlename;
+            Lastname = lastname;
+        }
+
+        public Person(string firstname, string lastname)
+            : this(firstname, string.Empty, lastname)
+        { }
+
+        public Person(string firstname, string lastname, DateTime birthdate)
+            : this(firstname, string.Empty, lastname, birthdate)
+        { }
+
         public Person(string firstname, string middlename, string lastname, DateTime birthdate)
+            : this(firstname, middlename, lastname)
         {
             Firstname = firstname;
             Middlename = middlename;
@@ -21,8 +41,5 @@ namespace StandbyLogger.Models
             Birthdate = birthdate;
         }
 
-        public Person(string firstname, string lastname, DateTime birthdate)
-            : this(firstname, string.Empty, lastname, birthdate)
-        { }
     }
 }

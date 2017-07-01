@@ -42,12 +42,16 @@ namespace StandbyLogger.ViewModels
             GoToChartsView = new RelayCommand(c => ShowChartsView(), c => IsValid == true);
             GoToSettingsView = new RelayCommand(c => ShowSettingsView(), c => IsValid == true);
 
+            // Initialize data.
+            SettingsVM.ReadSettings();
+
             // Set start view.
             CurrentView = HomeVM;
         }
 
         public void ShowLogCreationView()
         {
+            LogCreationVM.Reset();
             CurrentView = LogCreationVM;
         }
 

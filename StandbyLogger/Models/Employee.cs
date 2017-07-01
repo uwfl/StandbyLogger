@@ -10,6 +10,9 @@ namespace StandbyLogger.Models
     {
         public Company Employer { get; set; }
 
+        public Employee()
+        { }
+
         public Employee(string firstname, string lastname, DateTime birthdate, Company employer)
             : base(firstname, lastname, birthdate)
         {

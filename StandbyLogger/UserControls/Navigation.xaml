@@ -5,20 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StandbyLogger.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
+            <local:MenuButton Content="Show Charts" Icon="/Resources/Icons/statistics.png" Command="{Binding Path=DataContext.GoToChartsView, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" BorderBrush="Black" BorderThickness="0, 1, 0, 0"  />
+            <local:MenuButton Content="Show Log" Icon="/Resources/Icons/log.png" Command="{Binding Path=DataContext.GoToServiceLogView, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" BorderBrush="Black" BorderThickness="0, 1, 0, 0" />
             <local:MenuButton Content="Add Log Entry" Icon="/Resources/Icons/add.png" Command="{Binding Path=DataContext.GoToLogCreationView, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" BorderBrush="Black" BorderThickness="0, 1, 0, 0" />
-            <local:MenuButton Content="Show Log" Icon="/Resources/Icons/add.png" Command="{Binding Path=DataContext.GoToServiceLogView, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" BorderBrush="Black" BorderThickness="0, 1, 0, 0" />
-            <local:MenuButton Content="Show Charts" Icon="/Resources/Icons/add.png" Command="{Binding Path=DataContext.GoToChartsView, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" BorderBrush="Black" BorderThickness="0, 1, 0, 0"  />
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <local:MenuButton Content="Settings" Icon="/Resources/Icons/add.png" Command="{Binding Path=GoToSettingsView, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" BorderBrush="Black" BorderThickness="0, 1, 0, 0" />
+            <local:MenuButton Content="Settings" Icon="/Resources/Icons/settings.png" Command="{Binding Path=DataContext.GoToSettingsView, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" BorderBrush="Black" BorderThickness="0, 1, 0, 0" />
         </StackPanel>
     </Grid>
 </UserControl>
