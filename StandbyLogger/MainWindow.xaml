@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StandbyLogger"
+        xmlns:uc="clr-namespace:StandbyLogger.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="900">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderThickness="0, 0, 0, 2" BorderBrush="{StaticResource ResourceKey=SCB_Reckeweg}">
+            <Image Source="Resources/Images/logo_reckeweg.png" MaxHeight="60" Margin="5" />
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderThickness="0, 0, 2, 0" BorderBrush="{StaticResource ResourceKey=SCB_Reckeweg}">
+                <uc:Navigation />
+            </Border>
+
+            <TextBlock Grid.Column="1" Text="{Binding Path=Title}" />
+            <ContentControl Grid.Column="1" Content="{Binding Path=CurrentView}" />
+        </Grid>
     </Grid>
 </Window>
