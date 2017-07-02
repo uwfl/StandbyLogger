@@ -13,6 +13,12 @@ namespace StandbyLogger.Models
         public Employee()
         { }
 
+        public Employee(string firstname, string middlename, string lastname, Company employer)
+            : base(firstname, middlename, lastname)
+        {
+            Employer = employer;
+        }
+
         public Employee(string firstname, string lastname, DateTime birthdate, Company employer)
             : base(firstname, lastname, birthdate)
         {

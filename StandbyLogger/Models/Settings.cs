@@ -11,17 +11,14 @@ namespace StandbyLogger.Models
         public List<Employee> Employees { get; set; }
         public List<Informer> Informers { get; set; }
         public List<string> FailureTypes { get; set; }
-
-        public List<string> EmailTo { get; set; }
-        public List<string> EmailCC { get; set; }
+        public List<EMailContact> EMailContacts { get; set; }
 
         public Settings()
         {
             Employees = new List<Employee>();
             Informers = new List<Informer>();
             FailureTypes = new List<string>();
-            EmailTo = new List<string>();
-            EmailCC = new List<string>();
+            EMailContacts = new List<EMailContact>();
         }
 
         public Settings(bool fallback = false)
@@ -53,8 +50,8 @@ namespace StandbyLogger.Models
             FailureTypes.Add("Einbruchsalarm");
 
             // Add default emails.
-            EmailTo.Add("michael.kraus@reckeweg.de");
-            EmailCC.Add("Sabine.Penger-Meyer@reckeweg.de");
+            EMailContacts.Add(new Models.EMailContact("Abteilungsleiter FM", "michael.kraus@reckeweg.de"));
+            EMailContacts.Add(new Models.EMailContact("Personalabteilung", "Sabine.Penger-Meyer@reckeweg.de"));
         }
     }
 }

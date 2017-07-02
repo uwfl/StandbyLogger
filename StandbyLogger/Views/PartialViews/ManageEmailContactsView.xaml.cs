@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace StandbyLogger.Views.PartialViews
 {
     /// <summary>
-    /// Interaction logic for AddEmailContactsView.xaml
+    /// Interaction logic for ManageEmailContactsView.xaml
     /// </summary>
-    public partial class AddEmailContactsView : UserControl
+    public partial class ManageEmailContactsView : UserControl
     {
-        public AddEmailContactsView()
+        public ManageEmailContactsView()
         {
             InitializeComponent();
         }

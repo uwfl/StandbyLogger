@@ -11,13 +11,25 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <TabControl>
             <TabItem Content="{Binding Path=EmployeeVM}" Header="Mitarbeiter" />
             <TabItem Content="{Binding Path=InformantVM}" Header="Informanten" />
-            <TabItem Content="{Binding Path=FailureVM}" Header="Störungstypen" />
+            <TabItem Content="{Binding Path=FailureTemplateVM}" Header="Störungstypen" />
             <TabItem Content="{Binding Path=EMailContactsVM}" Header="E-Mail Kontaktdaten" />
         </TabControl>
-        <TextBlock Text="Settings" />
-        <Button Command="{Binding Path=SaveSettingsCommand}" Content="Speichern" />
+
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <uc:MenuButton
+                Command="{Binding Path=SaveSettingsCommand}"
+                Content="Speichern"
+                Icon="/Resources/Icons/save.png" />
+        </StackPanel>
     </Grid>
 </UserControl>

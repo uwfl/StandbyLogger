@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace StandbyLogger.Views.PartialViews
 {
     /// <summary>
-    /// Interaction logic for AddInformerView.xaml
+    /// Interaction logic for ManageEmployeeView.xaml
     /// </summary>
-    public partial class AddInformerView : UserControl
+    public partial class ManageEmployeeView : UserControl
     {
-        public AddInformerView()
+        public ManageEmployeeView()
         {
             InitializeComponent();
         }

@@ -12,43 +12,11 @@ namespace StandbyLogger.ViewModels
     public class SettingsViewModel : BaseViewModel
     {
         public Settings Settings { get; private set; }
+        public ManageEmployeeViewModel EmployeeVM { get; set; }
+        public ManageInformantViewModel InformantVM { get; set; }
+        public ManageFailureTemplatesViewModel FailureTemplateVM { get; set; }
+        public ManageEMailContactsViewModel EMailContactsVM { get; set; }
 
-        private ObservableCollection<Employee> _employees;
-        public ObservableCollection<Employee> Employees
-        {
-            get { return _employees; }
-            set { _employees = value; }
-        }
-
-        private ObservableCollection<Informer> _informers;
-        public ObservableCollection<Informer> Informers
-        {
-            get { return _informers; }
-            set { _informers = value; }
-        }
-
-        private ObservableCollection<string> _failureTypes;
-        public ObservableCollection<string> FailureTypes
-        {
-            get { return _failureTypes; }
-            set { _failureTypes = value; }
-        }
-
-        private ObservableCollection<string> _emailTo;
-        public ObservableCollection<string> EmailTo
-        {
-            get { return _emailTo; }
-            set { _emailTo = value; }
-        }
-
-        private ObservableCollection<string> _emailCC;
-        public ObservableCollection<string> EmailCC
-        {
-            get { return _emailCC; }
-            set { _emailCC = value; }
-        }
-
-        [XmlIgnore]
         public RelayCommand AddEmployeeCommand { get; set; }
         public RelayCommand AddInformerCommand { get; set; }
         public RelayCommand AddFailureTypeCommand { get; set; }
@@ -58,9 +26,10 @@ namespace StandbyLogger.ViewModels
 
         public SettingsViewModel()
         {
-            Employees = new ObservableCollection<Employee>();
-            Informers = new ObservableCollection<Informer>();
-            FailureTypes = new ObservableCollection<string>();
+            EmployeeVM = new ManageEmployeeViewModel();
+            InformantVM = new ManageInformantViewModel();
+            EMailContactsVM = new ManageEMailContactsViewModel();
+            FailureTemplateVM = new ManageFailureTemplatesViewModel();
 
             SaveSettingsCommand = new RelayCommand(c => SaveSettings(), c => true);
         }
@@ -78,18 +47,30 @@ namespace StandbyLogger.ViewModels
             }
 
             // Copy values to the current display VM.
-            Employees = new ObservableCollection<Employee>(Settings.Employees);
-            Informers = new ObservableCollection<Informer>(Settings.Informers);
-            FailureTypes = new ObservableCollection<string>(Settings.FailureTypes);
+            EmployeeVM.Employees = new ObservableCollection<EmployeeViewModel>(Settings.Employees.Select(e => new EmployeeViewModel(e)));
+            InformantVM.Informants = new ObservableCollection<InformerViewModel>(Settings.Informers.Select(i => new InformerViewModel(i)));
+            FailureTemplateVM.FailureTemplates = new ObservableCollection<FailureTemplateViewModel>(Settings.FailureTypes.Select(ft => new FailureTemplateViewModel(ft)));
+            EMailContactsVM.EMailContacts = new ObservableCollection<EMailContactViewModel>(Settings.EMailContacts.Select(e => new EMailContactViewModel(e)));
         }
 
         public void SaveSettings()
         {
-            Settings.Employees = Employees.ToList();
-            Settings.Informers = Informers.ToList();
-            Settings.FailureTypes = FailureTypes.ToList();
+            try
+            {
+                // Copy all VM values to the settings object.
+                Settings.Employees = EmployeeVM.Employees.Select(e => e.Employee).ToList();
+                Settings.Informers = InformantVM.Informants.Select(i => i.Informer).ToList();
+                Settings.FailureTypes = FailureTemplateVM.FailureTemplates.Select(ft => ft.FailureType).ToList();
+                Settings.EMailContacts = EMailContactsVM.EMailContacts.Select(e => e.EMailContact).ToList();
 
-            Utilities.SerializingHelper.Serialize(Settings, Utilities.Constants.PATH_SETTINGS);
+                // Serialize as XML file.
+                Utilities.SerializingHelper.Serialize(Settings, Utilities.Constants.PATH_SETTINGS);
+                System.Windows.MessageBox.Show("Alle Einstellungen wurden vollständig gespeichert.", "Speichern erfolgreich", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            }
+            catch (Exception)
+            {
+                System.Windows.MessageBox.Show("Fehler beim speichern der Daten.", "Fehler: Keine Speicherung möglich", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Stop);
+            }
         }
     }
 }
