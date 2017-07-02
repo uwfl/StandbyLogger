@@ -1,6 +1,7 @@
 ﻿using StandbyLogger.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,56 +10,34 @@ namespace StandbyLogger.ViewModels
 {
     public class LogEntryActorViewModel : BaseViewModel
     {
-        public RelayCommand FlagToRemoveCommand { get; set; }
-        public List<Employee> Actors { get; set; }
-        public event EventHandler FlaggedForRemoval;
-
-        private Employee _actor;
+        public LogEntryActor LogEntryActor { get; private set; }
+        
         public Employee Actor
         {
-            get { return _actor; }
-            set { _actor = value; NotifyPropertyChanged(); }
+            get { return LogEntryActor.Actor; }
+            set { LogEntryActor.Actor = value; NotifyPropertyChanged(); }
         }
-
-        private DateTime _from;
+        
         public DateTime From
         {
-            get { return _from; }
-            set { _from = value; NotifyPropertyChanged(); }
+            get { return LogEntryActor.From; }
+            set { LogEntryActor.From = value; NotifyPropertyChanged(); }
         }
-
-        private DateTime _to;
+        
         public DateTime To
         {
-            get { return _to; }
-            set { _to = value; NotifyPropertyChanged(); }
+            get { return LogEntryActor.To; }
+            set { LogEntryActor.To = value; NotifyPropertyChanged(); }
         }
 
-        public LogEntryActorViewModel(List<Employee> actors, DateTime from, DateTime to)
+        public LogEntryActorViewModel(LogEntryActor logEntryActor)
         {
-            Actors = actors;
-            From = from;
-            To = to;
-
-            FlagToRemoveCommand = new RelayCommand(c => FlagForRemoval(), c => true);
+            LogEntryActor = logEntryActor;
         }
 
-        public void FlagForRemoval()
+        public LogEntryActorViewModel(Employee actor,DateTime from, DateTime to)
         {
-            OnFlagForRemoval(EventArgs.Empty);
-        }
-
-        protected virtual void OnFlagForRemoval(EventArgs e)
-        {
-            if (FlaggedForRemoval != null)
-            {
-                FlaggedForRemoval(this, e);
-            }
-        }
-
-        public LogEntryActor ToLogEntryActor()
-        {
-            return new LogEntryActor(Actor, From, To);
+            LogEntryActor = new LogEntryActor(actor, from, to);
         }
     }
 }

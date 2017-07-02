@@ -13,6 +13,14 @@ namespace StandbyLogger.Models
         public string Lastname { get; set; }
         [XmlIgnore]
         public DateTime Birthdate { get; set; }
+        [XmlIgnore]
+        public string DisplayName
+        {
+            get
+            {
+                return Lastname + ", " + Firstname + " " + Middlename;
+            }
+        }
 
         protected Person()
         { }

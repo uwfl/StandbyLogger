@@ -5,115 +5,123 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StandbyLogger.ViewModels.LogCreationView;
 
 namespace StandbyLogger.ViewModels
 {
     public class LogCreationViewModel : BaseViewModel
     {
-        private Informer _informer;
-        public Informer Informer
-        {
-            get { return _informer; }
-            set { _informer = value; NotifyPropertyChanged(); }
-        }
+        public Settings CurrentSettings { get; private set; }
 
-        private DateTime _timeOfOccurrence;
-        public DateTime TimeOfOccurrence
-        {
-            get { return _timeOfOccurrence; }
-            set { _timeOfOccurrence = value; NotifyPropertyChanged(); }
-        }
+        public ManageLogEntryInformationViewModel ManageLogEntryInformationVM { get; set; }
+        public ManageLogEntryActorsViewModel ManageLogEntryActorsVM { get; set; }
+        public ManageLogEntryFailureDataViewModel ManageLogEntryFailureDataVM { get; set; }
+        public NotifyLogEntryViewModel NotifyLogEntryVM { get; set; }
 
-        private ObservableCollection<LogEntryActorViewModel> _logEntryActors;
-        public ObservableCollection<LogEntryActorViewModel> LogEntryActors
-        {
-            get { return _logEntryActors; }
-            set { _logEntryActors = value;  NotifyPropertyChanged(); }
-        }
-
-        private string _failureType;
-        public string FailureType
-        {
-            get { return _failureType; }
-            set { _failureType = value; NotifyPropertyChanged(); }
-        }
-
-        private DateTime _failureTime;
-        public DateTime FailureTime
-        {
-            get { return _failureTime; }
-            set { _failureTime = value; NotifyPropertyChanged(); }
-        }
-
-        private string _actionsTaken;
-        public string ActionsTaken
-        {
-            get { return _actionsTaken; }
-            set { _actionsTaken = value; NotifyPropertyChanged(); }
-        }
-
-        private bool _failureResolved;
-        public bool FailureResolved
-        {
-            get { return _failureResolved; }
-            set { _failureResolved = value; NotifyPropertyChanged(); }
-        }
-
-        private bool _serviceCompanyInvolved;
-        public bool ServiceCompanyInvolved
-        {
-            get { return _serviceCompanyInvolved; }
-            set { _serviceCompanyInvolved = value; NotifyPropertyChanged(); }
-        }
-
+        public RelayCommand ShowManageInformationViewCommand { get; set; }
+        public RelayCommand ShowManageActorsViewCommand { get; set; }
+        public RelayCommand ShowManageFailureDataCommand { get; set; }
         public RelayCommand SaveLogCommand { get; set; }
-        public RelayCommand AddActorCommand { get; set; }
+
+        private BaseViewModel _currentSubview;
+        public BaseViewModel CurrentSubview
+        {
+            get { return _currentSubview; }
+            set { _currentSubview = value; NotifyPropertyChanged(); }
+        }
 
         public LogCreationViewModel()
         {
-            SaveLogCommand = new RelayCommand(c => SaveLog(), c => true);
-            AddActorCommand = new RelayCommand(c => AddActor(), c => true);
+            // Create VMs.
+            ManageLogEntryInformationVM = new ManageLogEntryInformationViewModel(this);
+            ManageLogEntryActorsVM = new ManageLogEntryActorsViewModel(this);
+            ManageLogEntryFailureDataVM = new ManageLogEntryFailureDataViewModel(this);
+            NotifyLogEntryVM = new NotifyLogEntryViewModel();
 
-            LogEntryActors = new ObservableCollection<LogEntryActorViewModel>();
+            // Set default subview.
+            CurrentSubview = ManageLogEntryInformationVM;
+
+            // Create commands.
+            ShowManageInformationViewCommand = new RelayCommand(c => ShowManageInformationView(), c => true);
+            ShowManageActorsViewCommand = new RelayCommand(c => ShowManageActorsView(), c => ManageLogEntryInformationVM.IsValid);
+            ShowManageFailureDataCommand = new RelayCommand(c => ShowManageFailureDataView(), c => ManageLogEntryActorsVM.IsValid);
+            SaveLogCommand = new RelayCommand(c => SaveLog(), c => (ManageLogEntryInformationVM.IsValid && ManageLogEntryActorsVM.IsValid && ManageLogEntryFailureDataVM.IsValid) && !IsBusy);
         }
 
         public void Reset()
         {
-            Informer = null;
-            TimeOfOccurrence = DateTime.Now;
-            LogEntryActors.Clear();
-            FailureType = string.Empty;
-            FailureTime = DateTime.Now;
-            ActionsTaken = string.Empty;
-            FailureResolved = false;
-            ServiceCompanyInvolved = false;            
+            // Reset all steps.
+            ManageLogEntryInformationVM.Reset();
+            ManageLogEntryActorsVM.Reset();
+            ManageLogEntryFailureDataVM.Reset();
+
+            // Set first step.
+            CurrentSubview = ManageLogEntryInformationVM;
         }
 
-        private void AddActor()
+        public void SetSettings(Settings currentSettings)
         {
-            var employeeList = new List<Employee>();
-            employeeList.Add(new Employee("Markus", "Voß", DateTime.Now, new Company("Familie Reckeweg")));
-            employeeList.Add(new Employee("Markus", "Voß", DateTime.Now, new Company("Familie Reckeweg")));
-            employeeList.Add(new Employee("Markus", "Voß", DateTime.Now, new Company("Familie Reckeweg")));
-            employeeList.Add(new Employee("Markus", "Voß", DateTime.Now, new Company("Familie Reckeweg")));
-            employeeList.Add(new Employee("Markus", "Voß", DateTime.Now, new Company("Familie Reckeweg")));
-
-            var actor = new LogEntryActorViewModel(employeeList, TimeOfOccurrence, TimeOfOccurrence);
-            actor.FlaggedForRemoval += Actor_FlaggedForRemoval;
-            LogEntryActors.Add(actor);
+            CurrentSettings = currentSettings;
+            NotifyPropertyChanged("CurrentSettings");
         }
 
-        private void Actor_FlaggedForRemoval(object sender, EventArgs e)
+        public void ShowManageInformationView()
         {
-            var actorToRemove = sender as LogEntryActorViewModel;
-            actorToRemove.FlaggedForRemoval -= Actor_FlaggedForRemoval;
-            LogEntryActors.Remove(actorToRemove);
+            CurrentSubview = ManageLogEntryInformationVM;
         }
 
-        private void SaveLog()
+        public void ShowManageActorsView()
         {
-            Failure failure = new Failure(FailureType, FailureTime, ActionsTaken, FailureResolved, ServiceCompanyInvolved);
-            LogEntry entry = new LogEntry(Informer, TimeOfOccurrence, LogEntryActors.Select(a => a.ToLogEntryActor()).ToList(), failure);
+            CurrentSubview = ManageLogEntryActorsVM;
+        }
+
+        public void ShowManageFailureDataView()
+        {
+            CurrentSubview = ManageLogEntryFailureDataVM;
+        }
+        
+        public void ShowNotifyLogEntryView(LogEntry logEntry)
+        {
+            NotifyLogEntryVM.SetLogEntry(logEntry);
+            CurrentSubview = NotifyLogEntryVM;
+        }
+
+        private LogEntry SaveLog()
+        {
+            IsBusy = true;
+            // Create failure object.
+            var failure = new Failure(ManageLogEntryFailureDataVM.FailureType, ManageLogEntryFailureDataVM.FailureTime, ManageLogEntryFailureDataVM.ActionsTaken, 
+                                        ManageLogEntryFailureDataVM.FailureResolved, ManageLogEntryFailureDataVM.ServiceCompanyInvolved);
+
+            // Create log entry object.
+            var entry = new LogEntry(ManageLogEntryInformationVM.Informer, ManageLogEntryInformationVM.TimeOfOccurrence, 
+                                            ManageLogEntryActorsVM.LogEntryActors.Select(lea => lea.LogEntryActor).ToList(), failure);
+
+            // Create filename.
+            var sb = new StringBuilder();
+            sb.Append("log_");
+            sb.Append(entry.TimeOfOccurrence.ToShortDateString());
+            sb.Append("_");
+            sb.Append(entry.Informer.Name);
+            sb.Append("_");
+            sb.Append(failure.Resolved ? "BEHOBEN" : "OFFEN");
+
+            string filename = System.IO.Path.Combine(Utilities.Constants.PATH_LOGDIRECTORY, sb.ToString() + ".xml");
+            int counter = 0;
+            while(System.IO.File.Exists(filename))
+            {
+                filename = System.IO.Path.Combine(Utilities.Constants.PATH_LOGDIRECTORY, sb.ToString() + "_" + ++counter + ".xml");
+            }
+
+            // Save log entry.
+            Utilities.SerializingHelper.Serialize(entry, filename);
+            IsBusy = false;
+
+
+            // Switch to next view.
+            ShowNotifyLogEntryView(entry);
+
+            return entry;
         }
     }
 }

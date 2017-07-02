@@ -5,10 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:StandbyLogger.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:StandbyLogger.UserControls"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Grid Background="White">
-        <TextBlock Text="ServiceLog" />
+        <ListBox ItemsSource="{Binding Path=ServiceLog.Entries}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <uc:LogEntry />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

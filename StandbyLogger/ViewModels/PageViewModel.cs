@@ -52,6 +52,7 @@ namespace StandbyLogger.ViewModels
         public void ShowLogCreationView()
         {
             LogCreationVM.Reset();
+            LogCreationVM.SetSettings(SettingsVM.Settings);
             CurrentView = LogCreationVM;
         }
 

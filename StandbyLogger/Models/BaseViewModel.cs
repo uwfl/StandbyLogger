@@ -18,14 +18,14 @@ namespace StandbyLogger.Models
         }
 
         protected bool _isValid = true;
-        public bool IsValid
+        public virtual bool IsValid
         {
             get { return _isValid; }
             set { _isValid = value; NotifyPropertyChanged(); }
         }
 
         private bool _isBusy;
-        public bool IsBusy
+        public virtual bool IsBusy
         {
             get { return _isBusy; }
             set { _isBusy = value; NotifyPropertyChanged(); }

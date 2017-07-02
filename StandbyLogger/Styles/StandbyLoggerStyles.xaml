@@ -7,8 +7,10 @@
     xmlns:partialViews="clr-namespace:StandbyLogger.Views.PartialViews"
     xmlns:uc="clr-namespace:StandbyLogger.UserControls"
     xmlns:viewmodels="clr-namespace:StandbyLogger.ViewModels"
+    xmlns:viewmodelsLogCreation="clr-namespace:StandbyLogger.ViewModels.LogCreationView"
     xmlns:views="clr-namespace:StandbyLogger.Views">
-    <!--  ViewModel Templates  -->
+
+    <!--  PageViewModel Templates  -->
     <DataTemplate DataType="{x:Type viewmodels:MainViewModel}">
         <views:HomeView />
     </DataTemplate>
@@ -27,6 +29,22 @@
     <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
         <views:HomeView />
     </DataTemplate>
+
+    <!--  Log Creation Partial Views  -->
+    <DataTemplate DataType="{x:Type viewmodelsLogCreation:ManageLogEntryInformationViewModel}">
+        <partialViews:ManageLogEntryInformationView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodelsLogCreation:ManageLogEntryActorsViewModel}">
+        <partialViews:ManageLogEntryActorsView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodelsLogCreation:ManageLogEntryFailureDataViewModel}">
+        <partialViews:ManageLogEntryFailureDataView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodelsLogCreation:NotifyLogEntryViewModel}">
+        <partialViews:NotifyLogEntryView />
+    </DataTemplate>
+
+    <!--  Settings Partial Views  -->
     <DataTemplate DataType="{x:Type viewmodels:ManageEmployeeViewModel}">
         <partialViews:ManageEmployeeView />
     </DataTemplate>
@@ -104,4 +122,19 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
+
+    <Style x:Key="Style_TextBlock_LogHeader" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Typography.Capitals" Value="SmallCaps" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="Style_TextBlock_LogSubHeader" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Typography.Capitals" Value="SmallCaps" />
+    </Style>
+
+
 </ResourceDictionary>

@@ -17,6 +17,10 @@ namespace StandbyLogger
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Create required directories.
+            System.IO.Directory.CreateDirectory(Utilities.Constants.PATH_LOGDIRECTORY);
+
+            // Set up IoC container.
             base.OnStartup(e);
             IUnityContainer container = new UnityContainer();
 

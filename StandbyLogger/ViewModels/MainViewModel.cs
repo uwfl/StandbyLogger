@@ -9,6 +9,8 @@ namespace StandbyLogger.ViewModels
 {
     public class MainViewModel : PageViewModel
     {
+
+
         public MainViewModel(HomeViewModel homeVM, LogCreationViewModel logCreationVM, ServiceLogViewModel serviceLogVM, ChartsViewModel chartsVM, SettingsViewModel settingsVM)
             : base(homeVM, logCreationVM, serviceLogVM, chartsVM, settingsVM)
         {
