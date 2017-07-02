@@ -15,13 +15,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <uc:LogEntry Grid.Row="0" DataContext="{Binding Path=LogEntry}" />
+        <uc:LogEntry
+            x:Name="entryVisual"
+            Grid.Row="0"
+            DataContext="{Binding Path=LogEntry}" />
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Right">
             <uc:MenuButton
                 BorderBrush="Black"
                 BorderThickness="1"
-                Command="{Binding Path=SaveAndSendEmailCommand}"
+                Command="{Binding Path=SendLogEntryAsMailCommand}"
+                CommandParameter="{Binding ElementName=entryVisual}"
                 Content="Eintrag per Mail senden"
                 Icon="/Resources/Icons/email.png" />
         </StackPanel>

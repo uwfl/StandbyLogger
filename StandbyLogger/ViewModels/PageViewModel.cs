@@ -46,7 +46,7 @@ namespace StandbyLogger.ViewModels
             SettingsVM.ReadSettings();
 
             // Set start view.
-            CurrentView = HomeVM;
+            CurrentView = ServiceLogVM;
         }
 
         public void ShowLogCreationView()

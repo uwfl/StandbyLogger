@@ -11,7 +11,7 @@
     d:DesignHeight="300"
     d:DesignWidth="600"
     mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <Grid Background="White">
             <Grid.Resources>
                 <Style TargetType="TextBox">
@@ -27,7 +27,7 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0" Style="{StaticResource Style_Border_Title}">
-                <TextBlock Style="{StaticResource Style_TextBlock_LogHeader}" Text="{Binding Path=TimeOfOccurrence, StringFormat=Notdiensteinsatz vom {0}}" />
+                <TextBlock Style="{StaticResource Style_TextBlock_LogHeader}" Text="{Binding Path=TimeOfOccurrence, StringFormat=Notdiensteinsatz vom {0:dd.MM.yyyy}}" />
             </Border>
 
             <Grid Grid.Row="1">
@@ -113,7 +113,7 @@
                     <TextBox
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="{Binding Path=OccurredFailure.TimeOfOccurrence}" />
+                        Text="{Binding Path=OccurredFailure.TimeOfOccurrence, StringFormat='{}{0:dd.MM.yyyy hh:mm:ss}'}" />
                     <TextBox
                         Grid.Row="2"
                         Grid.Column="1"
@@ -123,8 +123,14 @@
                 </Grid>
 
                 <StackPanel Margin="0,5,0,0">
-                    <CheckBox Content="Störung konnte behoben werden" IsChecked="{Binding Path=OccurredFailure.Resolved}" />
-                    <CheckBox Content="Servicefirma wurde hinzugezogen" IsChecked="{Binding Path=OccurredFailure.ServiceCompanyInvolved}" />
+                    <CheckBox
+                        Content="Störung konnte behoben werden"
+                        IsChecked="{Binding Path=OccurredFailure.Resolved}"
+                        IsEnabled="False" />
+                    <CheckBox
+                        Content="Servicefirma wurde hinzugezogen"
+                        IsChecked="{Binding Path=OccurredFailure.ServiceCompanyInvolved}"
+                        IsEnabled="False" />
                 </StackPanel>
             </StackPanel>
         </Grid>

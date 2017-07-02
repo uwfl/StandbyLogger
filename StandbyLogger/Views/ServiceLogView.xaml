@@ -10,12 +10,15 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Grid Background="White">
-        <ListBox ItemsSource="{Binding Path=ServiceLog.Entries}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <uc:LogEntry />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Path=ServiceLog.Entries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                            <uc:LogEntry Margin="0,0,0,15" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </ScrollViewer>
     </Grid>
 </UserControl>

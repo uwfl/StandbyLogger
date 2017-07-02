@@ -7,6 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using StandbyLogger.ViewModels;
+using System.Windows.Markup;
+using System.Globalization;
+using System.Threading;
 
 namespace StandbyLogger
 {
@@ -33,6 +36,10 @@ namespace StandbyLogger
             var mainWindow = container.Resolve<MainWindow>(); // Creating Main window
             Application.Current.MainWindow = mainWindow;
             Application.Current.MainWindow.Show();
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name)));
         }
     }
 }
