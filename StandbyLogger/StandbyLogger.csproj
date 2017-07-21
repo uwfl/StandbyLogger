@@ -119,6 +119,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IServiceLog.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\EMailContact.cs" />
     <Compile Include="Models\RelayCommand.cs" />

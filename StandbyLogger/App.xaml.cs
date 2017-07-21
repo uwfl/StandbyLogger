@@ -10,6 +10,8 @@ using StandbyLogger.ViewModels;
 using System.Windows.Markup;
 using System.Globalization;
 using System.Threading;
+using StandbyLogger.Models;
+using StandbyLogger.Interfaces;
 
 namespace StandbyLogger
 {
@@ -26,9 +28,12 @@ namespace StandbyLogger
             // Set up IoC container.
             base.OnStartup(e);
             IUnityContainer container = new UnityContainer();
+            IServiceLog serviceLog = new ServiceLog();
 
+            container.RegisterInstance(typeof(IServiceLog), serviceLog);
             container.RegisterType<MainWindow>();
             container.RegisterType<ViewModels.MainViewModel>();
+            container.RegisterType<ViewModels.ServiceLogViewModel>();
             container.RegisterType<ViewModels.LogCreationViewModel>();
             container.RegisterType<ViewModels.SettingsViewModel>();
             container.RegisterType<ViewModels.ChartsViewModel>();

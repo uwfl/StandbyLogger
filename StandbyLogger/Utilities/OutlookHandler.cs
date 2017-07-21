@@ -37,9 +37,7 @@ namespace StandbyLogger.Utilities
 
             // Add attachments and add them as inline.
             Attachment atm;
-            string imageCid;
             List<string> imageCids = new List<string>();
-            int counter = 1;
             foreach (var attachment in attachments)
             {
                 atm = mailItem.Attachments.Add(attachment, NetOffice.OutlookApi.Enums.OlAttachmentType.olEmbeddeditem);

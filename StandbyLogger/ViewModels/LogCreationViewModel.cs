@@ -6,11 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StandbyLogger.ViewModels.LogCreationView;
+using StandbyLogger.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace StandbyLogger.ViewModels
 {
     public class LogCreationViewModel : BaseViewModel
     {
+        [Dependency]
+        public IServiceLog ServiceLog { get; set; }
         public Settings CurrentSettings { get; private set; }
 
         public ManageLogEntryInformationViewModel ManageLogEntryInformationVM { get; set; }
@@ -115,8 +119,8 @@ namespace StandbyLogger.ViewModels
 
             // Save log entry.
             Utilities.SerializingHelper.Serialize(entry, filename);
+            ServiceLog.AddLogEntry(entry);
             IsBusy = false;
-
 
             // Switch to next view.
             ShowNotifyLogEntryView(entry);
