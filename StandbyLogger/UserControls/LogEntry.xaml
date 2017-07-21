@@ -40,7 +40,7 @@
                 <TextBlock Grid.Column="0" Text="Informiert durch:" />
                 <TextBox Grid.Column="1" Text="{Binding Path=Informer.Name}" />
                 <TextBlock Grid.Column="2" Text="Informiert um:" />
-                <TextBox Grid.Column="3" Text="{Binding Path=TimeOfOccurrence, StringFormat='hh:mm'}" />
+                <TextBox Grid.Column="3" Text="{Binding Path=TimeOfOccurrence, StringFormat='HH:mm'}" />
             </Grid>
 
             <StackPanel Grid.Row="2" Margin="0,15,0,0">
@@ -65,11 +65,11 @@
                             Header="Mitarbeiter" />
                         <DataGridTextColumn
                             Width="*"
-                            Binding="{Binding Path=From, StringFormat='hh:mm'}"
+                            Binding="{Binding Path=From, StringFormat='HH:mm'}"
                             Header="Kommen" />
                         <DataGridTextColumn
                             Width="*"
-                            Binding="{Binding Path=To, StringFormat='hh:mm'}"
+                            Binding="{Binding Path=To, StringFormat='HH:mm'}"
                             Header="Gehen" />
                     </DataGrid.Columns>
                 </DataGrid>
@@ -113,7 +113,7 @@
                     <TextBox
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="{Binding Path=OccurredFailure.TimeOfOccurrence, StringFormat='{}{0:dd.MM.yyyy hh:mm:ss}'}" />
+                        Text="{Binding Path=OccurredFailure.TimeOfOccurrence, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}" />
                     <TextBox
                         Grid.Row="2"
                         Grid.Column="1"

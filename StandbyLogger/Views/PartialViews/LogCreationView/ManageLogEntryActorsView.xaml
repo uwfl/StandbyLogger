@@ -103,11 +103,11 @@
                         Header="Mitarbeiter" />
                     <DataGridTextColumn
                         Width="*"
-                        Binding="{Binding Path=From, StringFormat='hh:mm'}"
+                        Binding="{Binding Path=From, StringFormat='HH:mm'}"
                         Header="Kommen" />
                     <DataGridTextColumn
                         Width="*"
-                        Binding="{Binding Path=To, StringFormat='hh:mm'}"
+                        Binding="{Binding Path=To, StringFormat='HH:mm'}"
                         Header="Gehen" />
                 </DataGrid.Columns>
             </DataGrid>
